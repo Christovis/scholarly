@@ -21,7 +21,6 @@ setup_notes.md
 #logging
 *.log
 
-
 #dev testing
 vic.py
 .env
