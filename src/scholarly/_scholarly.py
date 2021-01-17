@@ -46,7 +46,7 @@ class _Scholarly:
 
 
     def set_logger(self, enable: bool):
-        """Enable or disable the logger for google scholar. 
+        """Enable or disable the logger for google scholar.
         Enabled by default
         """
         self.__nav.set_logger(enable)
@@ -122,7 +122,7 @@ class _Scholarly:
 
     def search_single_pub(self, pub_title: str, filled: bool = False)->PublicationParser:
         """Search by scholar query and return a single Publication container object
-        
+
         :param pub_title: Title of the publication to search
         :type pub_title: string
         :param filled: Whether the application should be filled with additional information
@@ -157,12 +157,12 @@ class _Scholarly:
         """
         url = _AUTHSEARCH.format(requests.utils.quote(name))
         return self.__nav.search_authors(url)
-    
+
     def fill(self, object: dict, sections=[]) -> Author or Publication:
         """Fills the object according to its type.
         If the container type is Author it will fill the additional author fields
         If it is Publication it will fill it accordingly.
-        
+
         :param object: the Author or Publication object that needs to get filled
         :type object: Author or Publication
         :param sections: the sections that the user wants filled for an Author object. This can be: ['basics', 'indices', 'counts', 'coauthors', 'publications']
@@ -182,12 +182,12 @@ class _Scholarly:
     def bibtex(self, object: Publication)->str:
         """Returns a bibtex entry for a publication that has either Scholar source
         or citation source
-        
+
         :param object: The Publication object for the bibtex exportation
         :type object: Publication
         """
         if object['container_type'] == "Publication":
-           publication_parser = PublicationParser(self.__nav) 
+           publication_parser = PublicationParser(self.__nav)
            return publication_parser.bibtex(object)
         else:
             print("Object not supported for bibtex exportation")
@@ -201,7 +201,7 @@ class _Scholarly:
         :type object: Publication
         """
         if object['container_type'] == "Publication":
-           publication_parser = PublicationParser(self.__nav) 
+           publication_parser = PublicationParser(self.__nav)
            return publication_parser.citedby(object)
         else:
             print("Object not supported for bibtex exportation")
@@ -233,7 +233,7 @@ class _Scholarly:
 
     def search_keyword(self, keyword: str):
         """Search by keyword and return a generator of Author objects
-        
+
         :param keyword: keyword to be searched
         :type keyword: str
 
@@ -284,7 +284,7 @@ class _Scholarly:
 
     def pprint(self, object: Author or Publication)->None:
         """Pretty print an Author or Publication container object
-        
+
         :param object: Publication or Author container object
         :type object: Author or Publication
         """
@@ -302,7 +302,7 @@ class _Scholarly:
                 to_print['filled'] = True
             else:
                 to_print['filled'] = False
-            
+
             if 'coauthors' in to_print:
                 for coauthor in to_print['coauthors']:
                     coauthor['filled'] = False
@@ -315,5 +315,6 @@ class _Scholarly:
                     del publication['container_type']
 
         del to_print['container_type']
+        print(type(to_print))
         print(pprint.pformat(to_print))
 

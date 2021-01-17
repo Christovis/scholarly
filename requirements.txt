@@ -10,3 +10,8 @@ selenium
 python-dotenv
 free-proxy
 sphinx_rtd_theme
+
+# dev-dependencies
+pytest
+pytest-cov
+pytest-mock

@@ -77,7 +77,7 @@ class Navigator(object, metaclass=Singleton):
         self.got_403 = False
         self._session = self.pm._new_session()
 
-    
+
     def _get_page(self, pagerequest: str) -> str:
         """Return the data from a webpage
 
@@ -119,7 +119,7 @@ class Navigator(object, metaclass=Singleton):
                                 time.sleep(w)
                         self._new_session()
                         self.got_403 = True
-                        
+
                         continue # Retry request within same session
                     else:
                         self.logger.info("We can use another connection... let's try that.")
@@ -209,7 +209,7 @@ class Navigator(object, metaclass=Singleton):
     def search_authors(self, url: str)->Author:
         """Generator that returns Author objects from the author search page"""
         soup = self._get_soup(url)
-         
+
         author_parser = AuthorParser(self)
         while True:
             rows = soup.find_all('div', 'gsc_1usr')
