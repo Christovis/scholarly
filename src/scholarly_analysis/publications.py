@@ -1,4 +1,7 @@
+import copy
 import json
+from typing import Optional
+
 import numpy as np
 import pandas as pd
 
@@ -30,17 +33,35 @@ class Publications:
             dic_pu = json.load(f)
         with open(file_auth) as f:
             dic_auth = json.load(f)
-        return Affiliations(dic_pu, dic_auth)
+        return Publications(dic_pu, dic_auth)
 
 
-    def get_titles(self) -> list:
+    def get_titles(self, content: Optional[list]=None) -> list:
         titles = []
         for key, publication in self.dic_pu.items():
             titles.append(publication["bib"]["title"])
+        if content:
+            titles = [
+                title for title in titles
+                if bool(set(content) & set(title.split(' ')))
+            ]
         return titles
 
 
-    def get_geography_of_publications(
+    def filter(self, of=dict) -> None:
+        dic_temp = copy.deepcopy(self.dic_pu)
+        for key_filter, content_filter in of.items():
+            for key, publication in dic_temp.items():
+                if bool(
+                    set(content_filter) & \
+                    set(publication["bib"][key_filter].split(" "))
+                ):
+                    continue
+                else:
+                    del self.dic_pu[key]
+
+
+    def get_geography(
         self,
         rm_fail: bool=True,
     ):

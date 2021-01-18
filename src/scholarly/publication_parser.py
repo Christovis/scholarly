@@ -110,7 +110,7 @@ class PublicationParser(object):
                 and not year.text.isspace()
                 and len(year.text) > 0):
             publication['bib']['pub_year'] = year.text.strip()
-        
+
         return publication
 
     def get_publication(self, __data, pubtype: PublicationSource)->Publication:
@@ -153,7 +153,7 @@ class PublicationParser(object):
             match = re.search('\\?user=(.*?)&amp;', author_html)
             if match:
                 author_id_list.append(match.groups()[0])
-            else: 
+            else:
                 author_id_list.append("")
         return author_id_list
 
@@ -243,7 +243,7 @@ class PublicationParser(object):
 
     def fill(self, publication: Publication)->Publication:
         """Populate the Publication with information from its profile
-        
+
         :param publication: Scholar or Citation publication container object that is not filled
         :type publication: PublicationCitation or PublicationScholar
         """
@@ -283,7 +283,7 @@ class PublicationParser(object):
                     # try to find all the gsh_csp if they exist
                     abstract = val.find_all(class_='gsh_csp')
                     result = ""
-                    
+
                     # append all gsh_csp together as there can be multiple in certain scenarios
                     for item in abstract:
                         if item.text[0:8].lower() == 'abstract':
@@ -291,7 +291,7 @@ class PublicationParser(object):
                         else:
                             result += item.text
 
-                    if len(abstract) == 0: # if no gsh_csp were found 
+                    if len(abstract) == 0: # if no gsh_csp were found
                         abstract = val.find(class_='gsh_small')
                         if abstract:
                             if abstract.text[0:8].lower() == 'abstract':
